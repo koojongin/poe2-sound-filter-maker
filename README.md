@@ -3,5 +3,12 @@
 # 시작
 
 ```
-$ npm start
+$ yarn
+$ yarn build
+$ yarn dev
+```
+
+# Exe파일 빌드
+```
+$ yarn pack
 ```
