@@ -6,7 +6,12 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/electron.d.ts"
+  ]
 }

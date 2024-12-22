@@ -1,7 +1,7 @@
 {
   "scripts": {
     "main": "./dist/main.js",
-    "build": "tsc && cp src/index.html dist/index.html",
+    "build": "tsc && cp index.html dist/index.html",
     "build-start": "npm run build && electron ./dist/main.js",
 
     "watch": "tsc --watch",
