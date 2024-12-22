@@ -1,11 +1,16 @@
 {
   "scripts": {
+    "main": "./dist/main.js",
     "build": "tsc && cp src/index.html dist/index.html",
-    "start": "npm run build && electron ./dist/main.js"
+    "build-start": "npm run build && electron ./dist/main.js",
+
+    "watch": "tsc --watch",
+    "start": "electronmon ./dist/main.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "electron": "^33.2.1",
+    "electronmon": "^2.0.3",
     "typescript": "^5.7.2"
   }
 }

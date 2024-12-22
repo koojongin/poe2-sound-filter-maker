@@ -41,15 +41,31 @@ electron_1.app.on('ready', () => {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'), // Preload 파일
+            preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
         },
     });
-    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+});
+// 파일 선택 IPC 핸들러
+electron_1.ipcMain.handle('dialog:openFile', async () => {
+    const { canceled, filePaths } = await electron_1.dialog.showOpenDialog({
+        properties: ['openFile'], // 단일 파일 선택
+        filters: [
+            { name: 'All Files', extensions: ['*'] },
+            { name: 'Text Files', extensions: ['txt'] },
+        ],
+    });
+    if (canceled) {
+        return null;
+    }
+    else {
+        return filePaths[0]; // 선택된 파일 경로 반환
+    }
 });
 electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
