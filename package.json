@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build": "tsc && cp src/index.html dist/index.html",
+    "start": "npm run build && electron ./dist/main.js"
+  },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "electron": "^33.2.1",
