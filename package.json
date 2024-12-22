@@ -1,6 +1,6 @@
 {
   "name": "poe2-sound-filter-maker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/main.js",
   "description": "A sound filter maker for POE2",
   "author": "JongIn Koo <jiku90@naver.com>",

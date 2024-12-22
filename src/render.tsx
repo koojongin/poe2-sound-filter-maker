@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import MakerPage from "@/maker/maker";
 import './index.css'
+import MakerPage from "@/renderer/maker/maker";
+
 const App = () => {
 
     return <div>
