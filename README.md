@@ -10,5 +10,5 @@ $ yarn dev
 
 # Exe파일 빌드
 ```
-$ yarn pack
+$ yarn make
 ```
