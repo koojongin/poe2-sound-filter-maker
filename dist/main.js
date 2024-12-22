@@ -32,9 +32,19 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
 let mainWindow = null;
 electron_1.app.on('ready', () => {
     mainWindow = new electron_1.BrowserWindow({
@@ -43,19 +53,44 @@ electron_1.app.on('ready', () => {
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'), // Preload 스크립트 경로
             nodeIntegration: false,
+            contextIsolation: true,
+            sandbox: true,
+            webSecurity: false
         },
     });
-    mainWindow.loadFile(path.join(__dirname, '../index.html'));
+    // mainWindow.loadFile(path.join(__dirname, '../index.html'));
+    mainWindow.loadURL('http://localhost:3000');
     mainWindow.on('closed', () => {
-        mainWindow = null;
+        mainWindow = null; //
     });
 });
-electron_1.ipcMain.handle('dialog:openFile', async () => {
-    const result = await electron_1.dialog.showOpenDialog({
+electron_1.ipcMain.handle('dialog:openFile', () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield electron_1.dialog.showOpenDialog({
         properties: ['openFile']
     });
-    return result.filePaths;
-});
+    return result.filePaths[0];
+}));
+electron_1.ipcMain.handle('file:readContent', (event, filePath) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return fs.readFileSync(filePath, 'utf-8');
+    }
+    catch (error) {
+        console.error(error);
+        return null;
+    }
+}));
+electron_1.ipcMain.handle('dialog:saveFile', (event_1, _a) => __awaiter(void 0, [event_1, _a], void 0, function* (event, { content }) {
+    const result = yield electron_1.dialog.showSaveDialog(mainWindow, {
+        defaultPath: path.join(electron_1.app.getPath('documents'), 'myfile.filter'),
+    });
+    if (result.canceled) {
+        return; // 사용자가 취소한 경우
+    }
+    const filePath = result.filePath;
+    // 선택한 경로에 텍스트 파일 저장
+    fs.writeFileSync(filePath, content, 'utf-8');
+    return filePath;
+}));
 electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         electron_1.app.quit();
