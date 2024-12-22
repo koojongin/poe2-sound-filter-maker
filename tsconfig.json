@@ -22,8 +22,9 @@
     }
   },
   "include": [
-    "src/main.ts",
-    "src/preload.ts"
+    "src/main/main.ts",
+    "src/main/preload.ts",
+    "src/**.*"
   ],
   "exclude": [
     "node_modules"

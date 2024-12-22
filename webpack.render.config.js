@@ -2,11 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    target: 'web',
-    entry: './src/render.tsx',
+    entry: './src/renderer/render.tsx',
     output: {
-        filename: 'render.js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist/renderer'),
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
@@ -48,5 +47,5 @@ module.exports = {
             template: './index.html',  // HTML 템플릿
         }),
     ],
-    mode: 'development',  // 개발 모드
+    mode: 'production',  // 개발 모드
 };

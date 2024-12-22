@@ -1,10 +1,15 @@
 {
   "name": "poe2-sound-filter-maker",
-  "version": "1.0",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "description": "A sound filter maker for POE2",
+  "author": "JongIn Koo <jiku90@naver.com>",
   "scripts": {
-    "main": "./dist/main.js",
-    "-build": "tsc && cp index.html dist/index.html",
-    "build": "webpack --mode production --config webpack.render.config.js",
+    "main": "dist/main.js",
+    "build:main": "webpack --mode production --config webpack.main.config.js",
+    "build:render": "webpack --mode production --config webpack.render.config.js",
+    "build:all": "npm run build:main && npm run build:render",
+    "build": "tsc && npm run build:all",
     "watch": "tsc --watch",
     "start:electron": "concurrently \"tsc --watch\" \"electron ./dist/main.js\"",
     "start:react": "webpack serve --config webpack.render.config.js",
@@ -20,7 +25,12 @@
     },
     "directories": {
       "output": "bundle"
-    }
+    },
+    "files": [
+      "**/*",
+      "dist/**/*",
+      "dist/renderer/**/*"
+    ]
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
